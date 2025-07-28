@@ -48,5 +48,16 @@ import rpy2.robjects as robjects
 robjects.r('''
     install.packages('mclust')
 ''')
-```
+
+## 4. Data Access  
+The data used in this study can be accessed through the following channels:  
+
+### 4.1 Supplementary Materials  
+Relevant data are included in the Supplementary Materials of our manuscript. Please refer to the corresponding section in the publication for detailed information and download links.  
+
+### 4.2 Google Drive  
+You can also directly access the data via Google Drive:  
+[https://drive.google.com/drive/folders/1crS8sbX12Qw-jSQd1wzqCZ4qrbPRtRdF](https://drive.google.com/drive/folders/1crS8sbX12Qw-jSQd1wzqCZ4qrbPRtRdF)  
+
+**Note**: Ensure a stable network connection to access the Google Drive link. If you encounter regional access restrictions, we recommend using a VPN service compliant with local laws and regulations, or reach out to the corresponding author for alternative data transfer solutions (e.g., WeTransfer, Baidu Cloud, etc.).  
 
