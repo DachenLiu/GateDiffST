@@ -50,8 +50,3 @@ robjects.r('''
 ''')
 ```
 
-
-## Notes  
-- Ensure your system has CUDA 11.8 compatible hardware if using GPU acceleration.  
-- For Windows users, replace `source activate GateDiffST` with `conda activate GateDiffST` in environment activation steps.  
-- If you encounter dependency conflicts, try creating a new Conda environment and re-installing packages in the order listed above.
