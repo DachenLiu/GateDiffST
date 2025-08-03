@@ -115,10 +115,8 @@ def get_feature(adata, deconvolution=False):
         adata_Vars = adata[:, adata.var['highly_variable']] 
 
     if isinstance(adata_Vars.X, csc_matrix) or isinstance(adata_Vars.X, csr_matrix):
-        print("adata_Vars.X is 稀疏矩阵")
         feat = adata_Vars.X.toarray()[:, ]
     else:
-        print("adata_Vars.X is not 稀疏矩阵")
         feat = adata_Vars.X[:, ]
 
     feat_a = permutation(feat)
