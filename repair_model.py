@@ -12,14 +12,14 @@ def main_repair(adata,df,device,save_path='example.csv'):
     from torch import nn, einsum
     import torch.nn.functional as F
 
-    def rotate_every_two(x):
+    def rotate(x):
         x1 = x[:, :, :, ::2]
         x2 = x[:, :, :, 1::2]
         x = torch.stack([-x2, x1], dim=-1)
         return x.flatten(-2)
 
-    def theta_shift(x, sin, cos):
-        return (x * cos) + (rotate_every_two(x) * sin)
+    def apply_rotary_embedding(x, sin, cos):
+        return (x * cos) + (rotate(x) * sin)
 
     def exisit(x):
         return x is not None
@@ -192,8 +192,8 @@ def main_repair(adata,df,device,save_path='example.csv'):
             eff = torch.softmax(eff, dim=-1).transpose(-1, -2)  
             k = k * eff * (H * W)
 
-            q_rope = theta_shift(q, sin, cos)
-            k_rope = theta_shift(k, sin, cos)
+            q_rope = apply_rotary_embedding(q, sin, cos)
+            k_rope = apply_rotary_embedding(k, sin, cos)
 
             z = 1 / (q @ k.mean(dim=-2, keepdim=True).transpose(-2, -1) + 1e-6) 
             kv = (k_rope.transpose(-2, -1) * ((H * W) ** -0.5)) @ (v * ((H * W) ** -0.5)) 
@@ -496,17 +496,6 @@ def main_repair(adata,df,device,save_path='example.csv'):
         result_dict[i] = spot_dict
 
     def mse_similarity(A, B):
-        """
-        计算两个矩阵的MSE相似性
-
-        Args:
-            A: 第一个矩阵
-            B: 第二个矩阵
-
-        Returns:
-            MSE相似性
-        """
-
         diff = A - B
         sq_diff = np.square(diff)
 
@@ -547,9 +536,6 @@ def main_repair(adata,df,device,save_path='example.csv'):
    
         average_result[ij] = average_matrix
      
-        print(average_matrix)
-        
-        print(ij, ':', average_result[ij])
 
     revector_result = {}
 
